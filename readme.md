@@ -1,4 +1,5 @@
-#Linker and Generate Tools Usage Guide
+# Warning: This tool will expire on 2024-08-24 and will no longer be usable.
+# Linker and Generate Tools Usage Guide
 
 ## Linker Tool (`linker.exe`)
 ---
