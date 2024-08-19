@@ -1,7 +1,7 @@
 MAKEFLAGS    += --no-print-directory
 
 PROJECT      := Demo
-ENTRYPOINT   := entry
+ENTRYPOINT   := go
 
 CCX64        := x86_64-w64-mingw32-gcc
 CCX86        := i686-w64-mingw32-gcc
