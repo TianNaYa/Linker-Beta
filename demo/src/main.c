@@ -28,5 +28,5 @@ void go( void* buffer, int length )
     printf( "f -> %d | %s\n", size, data );
 
     /* format 'n' */
-    printf( "n -> %d\n", ParserBool( &parser ) );
+    printf( "n -> %s\n", ParserBool( &parser ) ? "true" : "false" );
 }

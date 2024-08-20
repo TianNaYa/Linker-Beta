@@ -1,8 +1,11 @@
 {
-    "format": "zsi",
+    "format": "zbsifn",
     "values": [
         "Hello World Parameters",
+        65,
         20,
-        483913
+        483913,
+        "a.txt",
+        false
     ]
 }

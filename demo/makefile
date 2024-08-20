@@ -19,10 +19,10 @@ clean:
 
 x64:
 	@ $(CCX64) $(CFLAGS) $(SOURCES)
-	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x64.bin -f . -u true -m none
+	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x64.bin -f .
 	@ $(MAKE) clean
 
 x86:
 	@ $(CCX86) $(CFLAGS) $(SOURCES)
-	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x86.bin -f . -u true -m none
+	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x86.bin -f .
 	@ $(MAKE) clean

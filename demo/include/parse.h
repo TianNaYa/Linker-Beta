@@ -19,7 +19,6 @@ FLOAT ParserFloat( PARSER_PTR parser );
 BOOL  ParserBool( PARSER_PTR Parser );
 PVOID ParserPtr( PARSER_PTR Parser, INT Length );
 PVOID ParserExtract( PARSER_PTR Parser, PINT Length );
-PVOID ParserNext( PARSER_PTR Parser, INT Length );
 INT   ParserAvailableLength( PARSER_PTR Parser );
 VOID  ParserPointerOffsetIncreases( PARSER_PTR Parser, INT size );
 

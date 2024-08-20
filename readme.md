@@ -107,14 +107,13 @@ clean:
 
 x64:
 	@ $(CCX64) $(CFLAGS) $(SOURCES)
-	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x64.bin -f . -m none
+	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x64.bin -f .
 	@ $(MAKE) clean
 
 x86:
 	@ $(CCX86) $(CFLAGS) $(SOURCES)
-	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x86.bin -f . -m none
+	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x86.bin -f .
 	@ $(MAKE) clean
-
 ```
 
 ---
@@ -159,7 +158,7 @@ generate.exe -o apis -f a.dll b.dll c.dll d.dll ...
     "format": "zbsifn",
     "values": [
         "Hello World Parameters",
-        64,
+        65,
         20,
         483913,
         "a.txt",
@@ -201,7 +200,7 @@ void go( void* buffer, int length )
     printf( "f -> %d | %s\n", size, data );
 
     /* format 'n' */
-    printf( "n -> %d\n", ParserBool( &parser ) );
+    printf( "n -> %s\n", ParserBool( &parser ) ? "true" : "false" );
 }
 ```
 
