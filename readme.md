@@ -1,4 +1,9 @@
 # <span style="color: red;">Warning: This tool will expire on <span style="color: yellow;">2024-08-24</span> and will no longer be usable.</span>
+
+# Please do not use it in an offensive or defensive environment. The author will not be held responsible for any losses that occur.
+
+# The author does not bear any legal responsibility for the consequences of this tool
+
 # Linker and Generate Tools Usage Guide
 
 ## Linker Tool (`linker.exe`)
