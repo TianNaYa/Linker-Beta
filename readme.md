@@ -208,3 +208,12 @@ void go( void* buffer, int length )
 
 > The above describes how to pass and receive parameters
 
+---
+
+## Subsequent upgrades
+
+- Encrypted storage of data segments and other information
+- Or use a more secure API call strategy
+- Size optimization ( I think it's a bit large )
+- Maybe there are other places...
+
