@@ -122,8 +122,3 @@ PVOID ParserExtract( PARSER_PTR parser, PINT length )
     
     return Result;
 }
-
-PVOID ParserNext( PARSER_PTR parser, INT Length )
-{
-    return ParserPtr( parser , Length );
-}
