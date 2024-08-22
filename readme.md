@@ -1,4 +1,4 @@
-# <span style="color: red;">Warning: This tool will expire on <span style="color: yellow;">2024-08-24</span> and will no longer be usable.</span>
+# <span style="color: red;">Warning: This tool will expire on <span style="color: yellow;">2024-08-26</span> and will no longer be usable.</span>
 
 # Please do not use it in an offensive or defensive environment. The author will not be held responsible for any losses that occur.
 
@@ -111,13 +111,17 @@ clean:
 	@ del /q /f *.o *.obj
 
 x64:
+	@ echo [+] Build obj file for x64
 	@ $(CCX64) $(CFLAGS) $(SOURCES)
-	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x64.bin -f .
+	@ echo [+] Build bin file
+	@ $(LINKER) -e $(ENTRYPOINT) -p script/params.json -i script/api.json -o bin/$(PROJECT).x64.bin -f .
 	@ $(MAKE) clean
 
 x86:
+	@ echo [+] Build obj file for x86
 	@ $(CCX86) $(CFLAGS) $(SOURCES)
-	@ $(LINKER) -e $(ENTRYPOINT) -p script/args.json -i script/apis.json -o bin/$(PROJECT).x86.bin -f .
+	@ echo [+] Build bin file
+	@ $(LINKER) -e $(ENTRYPOINT) -p script/params.json -i script/api.json -o bin/$(PROJECT).x86.bin -f .
 	@ $(MAKE) clean
 ```
 
@@ -157,55 +161,59 @@ generate.exe -o apis -f a.dll b.dll c.dll d.dll ...
 
 ## Parameter passing method
 ```json
-// args.json
+// params.json
 
 {
-    "format": "zbsifn",
+    "format": "zisbnfw",
     "values": [
-        "Hello World Parameters",
-        65,
-        20,
-        483913,
-        "a.txt",
-        false
+        "Hello String",
+        12345678,
+        65535,
+        128,
+        true,
+        "file.txt",
+        "你好 天天"
     ]
 }
 ```
 
 ```c
-// main.c
+// entry.c
 
-#include <stdio.h>
+#include <entry.h>
 #include <parse.h>
+#include <a.h>
 
-void go( void* buffer, int length )
+void go( PVOID Buffer, INT Length, PDATA Sections )
 {
-    PARSER parser;
-    char*  data;
-    int    size;
+    PARSER Parser = { 0 };
+    LPVOID Data   = NULL;
+    SIZE_T Size   = 0x1000;
 
-    /* create parser */
-    ParserCreate( &parser, buffer, length );
+    ParserCreate( &Parser, Buffer, Length );
 
-    /* format 'z' */
-    data = ParserExtract( &parser, &size );
-    printf( "z -> %d | %s\n", size, data );
+    printf( "%s\n", ParserExtract( &Parser, NULL ) );           // 'z'
+    printf( "%d\n", ParserInt( &Parser ) );                     // 'i'
+    printf( "%d\n", ParserWord( &Parser ) );                    // 's'
+    printf( "%d\n", ParserByte( &Parser ) );                    // 'b'
+    printf( "%s\n", ParserBool( &Parser ) ? "true" : "false" ); // 'n'
+    printf( "%s\n", ParserExtract( &Parser, NULL ) );           // 'f'
 
-    /* format 'b' */
-    printf( "b -> %d\n", ParserByte( &parser ) );
+    // 'w'
+    MessageBoxW( 0, ParserExtract( &Parser, NULL ), L"WCHAR String", MB_OK );
 
-    /* format 's' */
-    printf( "s -> %d\n", ParserWord( &parser ) );
+    NtAllocateVirtualMemory( GetCurrentProcess(), &Data, 0, &Size, MEM_COMMIT, PAGE_READWRITE );
 
-    /* format 'i' */
-    printf( "i -> %d\n", ParserInt( &parser ) );
+    memset( Data, 0, Size );
 
-    /* format 'f' */
-    data = ParserExtract( &parser, &size );
-    printf( "f -> %d | %s\n", size, data );
+    sprintf( Data, "Hello World 11111" );
 
-    /* format 'n' */
-    printf( "n -> %s\n", ParserBool( &parser ) ? "true" : "false" );
+    printf( "%s\n", Data );
+
+    a();
+    b();
+    c();
+    d();
 }
 ```
 
@@ -222,3 +230,31 @@ void go( void* buffer, int length )
 - Size optimization ( I think it's a bit large )
 - Maybe there are other places...
 
+## Upgrade
+
+- A new Sections parameter is added to the entry function to obtain TEXT, DATA, RDATA, and BSS section information.
+
+---
+
+```c
+// demo
+
+typedef struct
+{
+    INT   Size;
+    PVOID Data;
+} DATA, *PDATA;
+
+#define SEC_TEXT  ( 0x0000 )
+#define SEC_DATA  ( 0x0001 )
+#define SEC_RDATA ( 0x0002 )
+#define SEC_BSS   ( 0x0003 )
+
+void entry( PVOID Buffer, INT Length, PDATA Sections )
+{
+    for( INT Sec = 0; Sec < 4; Sec++ )
+    {
+        printf( "Section Infomation: 0x%08X | 0x%p\n", Sections[ Sec ].Size, Sections[ Sec ].Data );
+    }
+}
+```
