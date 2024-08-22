@@ -1,0 +1,12 @@
+{
+    "format": "zisbnfw",
+    "values": [
+        "Hello String",
+        12345678,
+        65535,
+        128,
+        true,
+        "file.txt",
+        "你好 天天"
+    ]
+}
